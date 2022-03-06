@@ -6,7 +6,15 @@
 - Google Chrome
 - Windows 11
 ## 单任务版爬虫
-
+![artichive](./Architecture.png)
+- 站酷分类解析器
+- 站酷列表解析器
+- 站酷帖子解析器
+```go
+// 解析器Parser
+// 输入：utf-8编码的文本
+// 输出：Request{URL, 对应Parser}列表，Item列表
+```
 ## 并发版爬虫
 
 ## 分布式爬虫
