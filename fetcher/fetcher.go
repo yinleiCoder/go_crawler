@@ -16,7 +16,10 @@ import (
 	"time"
 )
 
+var rateLimiter = time.Tick(100 * time.Millisecond)
+
 func Fetch(url string) ([]byte, error) {
+	<-rateLimiter
 	var bodyReader *bufio.Reader
 	if strings.HasPrefix(url, "https://www.zcool.com.cn/work/") {
 		reader, err := fetchHtmlByChromedp(url, "#body")
@@ -57,8 +60,10 @@ func fetchHtmlByChromedp(urlStr, waitVisible string) (r io.Reader, err error) {
 		chromedp.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36"),
 	}
 	options = append(chromedp.DefaultExecAllocatorOptions[:], options...)
-	allocCtx, _ := chromedp.NewExecAllocator(context.Background(), options...)
+	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), options...)
+	defer cancel()
 	chromeCtx, cancel := chromedp.NewContext(allocCtx, chromedp.WithLogf(log.Printf))
+	defer cancel()
 	if err := chromedp.Run(chromeCtx); err != nil {
 		log.Fatal("run error:", err)
 	}

@@ -16,5 +16,10 @@
 // 输出：Request{URL, 对应Parser}列表，Item列表
 ```
 ## 并发版爬虫
+![artichive-cor](./Architecture_cor.png)
+单任务版的瓶颈在于每次fetcher并解析后才轮到下一个解析，这里通过Goroutine实现并发版本。
 
+Scheduler实现思路：
+- 思路1：(Scheduler为每个Request创建goroutine)所有Worker公用一个输入(Request送入Worker让他们自己去抢，谁抢到谁做)
+- 思路2：并发分发Request
 ## 分布式爬虫
