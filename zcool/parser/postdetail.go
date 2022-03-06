@@ -3,12 +3,11 @@ package parser
 import (
 	"goCrawler/engine"
 	"goCrawler/model"
-	"log"
 	"regexp"
 )
 
 var imgRe = regexp.MustCompile(`<div class="photo-information-content">\s*<img src="(https://img.zcool.cn/community/.*?)"`)
-var authorRe = regexp.MustCompile(`<a href="(https://www.zcool.com.cn/u/.*?)" title="(.*?)"\s*class="title-content" target="_blank">[^<]*</a>`)
+var authorRe = regexp.MustCompile(`<a href="(.*?)" title="(.*?)"\s*class="title-content" target="_blank">[^<]*</a>`)
 
 func ParsePostDetail(contents []byte) engine.ParseResult {
 	post := model.Post{}
@@ -24,6 +23,6 @@ func ParsePostDetail(contents []byte) engine.ParseResult {
 	result := engine.ParseResult{
 		Items: []interface{}{post},
 	}
-	log.Printf("%v", post)
+	//log.Printf("%v", post)
 	return result
 }

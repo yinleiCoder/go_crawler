@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-var rateLimiter = time.Tick(100 * time.Millisecond)
+var rateLimiter = time.Tick(50 * time.Millisecond)
 
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter
@@ -55,7 +55,7 @@ func fetchHtmlByChromedp(urlStr, waitVisible string) (r io.Reader, err error) {
 	var htmlContent string
 	// 自定义User-Agent、禁用图片加载
 	options := []chromedp.ExecAllocatorOption{
-		chromedp.Flag("headless", true),
+		chromedp.Flag("headless", true), // false 可以显示chrome进行调试
 		chromedp.Flag("blink-settings", "imagesEnabled=false"),
 		chromedp.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36"),
 	}

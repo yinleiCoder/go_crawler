@@ -20,6 +20,7 @@
 单任务版的瓶颈在于每次fetcher并解析后才轮到下一个解析，这里通过Goroutine实现并发版本。
 
 Scheduler实现思路：
-- 思路1：(Scheduler为每个Request创建goroutine)所有Worker公用一个输入(Request送入Worker让他们自己去抢，谁抢到谁做)
-- 思路2：并发分发Request
+- 思路1：所有Worker公用一个输入(Request送入Worker让他们自己去抢，谁抢到谁做)
+- 思路2：并发分发Request(Scheduler为每个Request创建goroutine)
+- 思路3[最终改进版]：Request队列、Worker队列(scheduler engine worker都互相通过Channel通信)
 ## 分布式爬虫
