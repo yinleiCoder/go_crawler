@@ -15,7 +15,7 @@ func ItemSaver() chan interface{} {
 		for {
 			item := <-out
 			log.Printf("(item saver)got item: %v", item)
-			save(item)
+			//save(item)
 		}
 	}()
 	return out

@@ -8,7 +8,7 @@ import (
 func TestParseCateList(t *testing.T) {
 	contents, err := ioutil.ReadFile("catelist_test_data.html")
 	if err != nil {
-		panic(err)
+		//panic(err)
 	}
 	//fmt.Printf("%s\n", contents)
 	result := ParseCateList(contents)

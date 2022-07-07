@@ -9,7 +9,7 @@ import (
 func TestParsePostDetail(t *testing.T) {
 	contents, err := ioutil.ReadFile("postdetail_test_data.html")
 	if err != nil {
-		panic(err)
+		//panic(err)
 	}
 	result := ParsePostDetail(contents)
 	if len(result.Items) != 1 {

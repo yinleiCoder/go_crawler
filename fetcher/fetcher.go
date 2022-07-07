@@ -16,13 +16,13 @@ import (
 	"time"
 )
 
-var rateLimiter = time.Tick(50 * time.Millisecond)
+var rateLimiter = time.Tick(1000 * time.Millisecond)
 
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter
 	var bodyReader *bufio.Reader
 	if strings.HasPrefix(url, "https://www.zcool.com.cn/work/") {
-		reader, err := fetchHtmlByChromedp(url, "#body")
+		reader, err := fetchHtmlByChromedp(url, "body")
 		if err != nil {
 			return nil, err
 		}
@@ -37,7 +37,8 @@ func Fetch(url string) ([]byte, error) {
 		//	fmt.Println("Error: status code", resp.StatusCode)
 		//	return
 		//}
-		reader, err := fetchHtmlByChromedp(url, "#body .all-work-list  #all-card-content .work-list-box")
+		//reader, err := fetchHtmlByChromedp(url, "#body .all-work-list  #all-card-content .work-list-box")
+		reader, err := fetchHtmlByChromedp(url, "body .workList")
 		if err != nil {
 			return nil, err
 		}
@@ -50,6 +51,7 @@ func Fetch(url string) ([]byte, error) {
 
 /**
 通过Chromedp获取Html源码
+https://github.com/chromedp/examples
 */
 func fetchHtmlByChromedp(urlStr, waitVisible string) (r io.Reader, err error) {
 	var htmlContent string
@@ -57,7 +59,8 @@ func fetchHtmlByChromedp(urlStr, waitVisible string) (r io.Reader, err error) {
 	options := []chromedp.ExecAllocatorOption{
 		chromedp.Flag("headless", true), // false 可以显示chrome进行调试
 		chromedp.Flag("blink-settings", "imagesEnabled=false"),
-		chromedp.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36"),
+		//chromedp.UserAgent("Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36"),
+		chromedp.UserAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/103.0.0.0 Safari/537.36"),
 	}
 	options = append(chromedp.DefaultExecAllocatorOptions[:], options...)
 	allocCtx, cancel := chromedp.NewExecAllocator(context.Background(), options...)
@@ -94,7 +97,7 @@ func fetchHtmlByChromedp(urlStr, waitVisible string) (r io.Reader, err error) {
 		//chromedp.Evaluate("document.querySelector('#footer').scrollIntoViewIfNeeded(true)", nil),
 		chromedp.OuterHTML(`document.querySelector("html")`, &htmlContent, chromedp.ByJSPath),
 	); err != nil {
-		log.Fatal("timeout error", err)
+		log.Fatal("timeout error： ", err)
 		return
 	}
 	r = strings.NewReader(htmlContent)
