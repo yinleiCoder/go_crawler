@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+        }
+        #logo {
+            width: 60vw;
+            border-radius: 10px;
+            box-shadow: #666666 6px 8px 15px;
+        }
+        .search {
+            display: flex;
+            align-items: center;
+        }
+        .search input{
+            width: 30vw;
+            height: 24px;
+            border-radius: 8px;
+            padding-left: 10px;
+            padding-right: 10px;
+            margin-right: 10px;
+        }
+        .search input+button {
+            font-weight: bold;
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 5px 8px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+        .search input+button:hover {
+            background-color: black;
+            color: white;
+        }
+        .webInfo > p span:first-of-type{
+            font-weight: bold;
+        }
+        @media screen and (max-width: 820px) {
+            .search input {
+                width: 70vw;
+            }
+            #logo {
+                width: 95vw;
+            }
+            .webInfo > p > span{
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<img id="logo" src="imgs/go_google_case_study_carousel.png" alt="">
+<div class="search">
+    <form method="get" action="search">
+        <input type="text" name="q" placeholder="search something">
+        <button type="submit">Search</button>
+    </form>
+</div>
+<div class="webInfo">
+    <p>
+        <span>Technical Support: </span>
+        <span>Go Docker ElasticSearch GoQuery Chromedp GithubActions</span>
+    </p>
+    <p>
+        <span>Coder: </span>
+        <span>YinLei</span>
+    </p>
+</div>
+</body>
+</html>

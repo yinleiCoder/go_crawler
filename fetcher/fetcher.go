@@ -16,7 +16,7 @@ import (
 	"time"
 )
 
-var rateLimiter = time.Tick(1000 * time.Millisecond)
+var rateLimiter = time.Tick(800 * time.Millisecond)
 
 func Fetch(url string) ([]byte, error) {
 	<-rateLimiter
@@ -70,10 +70,10 @@ func fetchHtmlByChromedp(urlStr, waitVisible string) (r io.Reader, err error) {
 	if err := chromedp.Run(chromeCtx); err != nil {
 		log.Fatal("run error:", err)
 	}
-	timeoutCtx, cancel := context.WithTimeout(chromeCtx, 60*time.Second)
-	defer cancel()
+	//timeoutCtx, cancel := context.WithTimeout(chromeCtx, 1*time.Hour)
+	//defer cancel()
 	log.Printf("chrome visit page %s \n", urlStr)
-	if err = chromedp.Run(timeoutCtx,
+	if err = chromedp.Run(chromeCtx,
 		chromedp.Navigate(urlStr),
 		chromedp.WaitVisible(waitVisible),
 		chromedp.KeyEvent(kb.End),
@@ -92,9 +92,22 @@ func fetchHtmlByChromedp(urlStr, waitVisible string) (r io.Reader, err error) {
 		chromedp.Sleep(1*time.Second),
 		chromedp.KeyEvent(kb.End),
 		chromedp.Sleep(1*time.Second),
+//		chromedp.ActionFunc(func(ctx context.Context) error {
+//			_, exp, err := runtime.Evaluate(`setTimeout(function() {
+//	document.querySelector('#box1').style.display = '';
+//}, 3000);`).Do(ctx)
+//			if err != nil {
+//				return err
+//			}
+//			if exp != nil {
+//				return exp
+//			}
+//			return nil
+//		}),
 		//chromedp.WaitVisible("#z-pages"),
+		//chromedp.Evaluate(`Object.keys(window);`, &res),
+		//chromedp.Text(`.Documentation-overview`, &res, chromedp.NodeVisible),
 		//chromedp.SendKeys(`div.spage-number`, kb.End, chromedp.ByQuery),
-		//chromedp.Evaluate("document.querySelector('#footer').scrollIntoViewIfNeeded(true)", nil),
 		chromedp.OuterHTML(`document.querySelector("html")`, &htmlContent, chromedp.ByJSPath),
 	); err != nil {
 		log.Fatal("timeout error： ", err)

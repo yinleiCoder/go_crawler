@@ -20,11 +20,12 @@ func ParsePost(contents []byte, belongOfCateHref string) engine.ParseResult {
 		postDetailUrls = append(postDetailUrls, targetLink)
 	})
 	for _, postDetailUrl := range postDetailUrls {
+		tempPostDetailUrl := postDetailUrl
 		//result.Items = append(result.Items, "Post " + postDetailUrl)
 		result.Requests = append(result.Requests, engine.Request{
 			Url: postDetailUrl,
 			ParserFunc: func(contents []byte) engine.ParseResult {
-				return ParsePostDetail(contents, postDetailUrl)
+				return ParsePostDetail(contents, tempPostDetailUrl)
 			},
 		})
 	}

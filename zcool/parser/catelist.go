@@ -22,11 +22,12 @@ func ParseCateList(contents []byte) engine.ParseResult {
 
 	result := engine.ParseResult{}
 	for _, href := range cateHrefList {
+		tempHref := href // function clouser
 		//result.Items = append(result.Items, cateTextList[index])
 		result.Requests = append(result.Requests, engine.Request{
 			Url: href,
 			ParserFunc: func(contents []byte) engine.ParseResult {
-				return ParsePost(contents, href)
+				return ParsePost(contents, tempHref)
 			},
 		})
 	}

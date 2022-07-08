@@ -1,13 +1,21 @@
-# Go爬虫(ZCOOL\Douyin)
+# Go爬虫(SPA web)
 `站酷(ZCOOL),中国设计师互动平台。深耕设计领域十五年,站酷聚集了1300万设计师、摄影师、插画师、艺术家、创意人,设计创意群体中具有较高的影响力与号召力。本仓库是用Go语言爬取站酷上的插画作品集(本人喜欢插画，很喜欢站酷上的作品，代码仅供学习交流！)`
 ## 编程环境
 - go version go1.18.3 linux/amd64
 - GoLand(2021.2.2) 
 - Google Chrome
 - Windows 11
-- Ubuntu
-- Docker
-- ElasticSearch
+- Ubuntu 22.x
+- [Docker](https://cr.console.aliyun.com/cn-hangzhou/instances/mirrors)
+- [ElasticSearch 7.x](https://www.elastic.co/guide/en/elasticsearch/reference/7.17/docker.html)  
+    `Base Instructions:(copy!copy!copy!)`
+  - `docker pull docker.elastic.co/elasticsearch/elasticsearch:7.17.5`
+  - `docker run -p 127.0.0.1:9200:9200 -p 127.0.0.1:9300:9300 -v /home/yinlei/Desktop/goCrawlerData:/usr/share/elasticsearch/data -e "discovery.type=single-node" docker.elastic.co/elasticsearch/elasticsearch:7.17.5`
+
+`you must add:`
+- [Chromedp](https://github.com/chromedp/examples)
+- [GoQuery](https://github.com/PuerkitoBio/goquery#api)
+- [ElasticClient 7](https://github.com/olivere/elastic)
 
 ## Usage
 
